@@ -4,6 +4,10 @@ LICENSE = "MIT"
 
 # Inherit NXP's official headless i.MX baseline image
 require recipes-fsl/images/imx-image-core.bb
+# Override NXP image name
+IMAGE_BASENAME = "${PN}"
+# Replaces the default timestamp suffix with your distro version
+IMAGE_VERSION_SUFFIX = "-v${DISTRO_VERSION}"
 
 # 1. Strip unneeded audio, multimedia, 3D demos, and wireless packagegroups from imx-image-core
 IMAGE_INSTALL:remove = " \
@@ -33,4 +37,5 @@ IMAGE_INSTALL:append = " \
     kernel-modules \
     podman \
     podman-compose \
+    os-release \
 "
