@@ -4,24 +4,20 @@ LICENSE = "MIT"
 
 # Inherit NXP's official headless i.MX baseline image
 require recipes-fsl/images/imx-image-core.bb
+# Override NXP image name
+IMAGE_BASENAME = "${PN}"
+# Replaces the default timestamp suffix with your distro version
+IMAGE_VERSION_SUFFIX = "-v${DISTRO_VERSION}"
 
-# 1. Strip unneeded audio, multimedia, 3D demos, and wireless packagegroups from imx-image-core
-IMAGE_INSTALL:remove = " \
-    packagegroup-fsl-tools-audio \
-    packagegroup-fsl-gstreamer1.0 \
-    packagegroup-fsl-gstreamer1.0-full \
-    imx-gpu-viv-demos \
-    alsa-utils \
-    alsa-state \
-    packagegroup-base-wifi \
-    packagegroup-base-bluetooth \
-    docker \
-"
+# Strip VPU hwcodecs and splash screen features inherited from imx-image-core
+IMAGE_FEATURES:remove = "hwcodecs splash"
 
-# 2. Append the eIQ NPU runtime (pulls libopenvx-imx, libvsc-imx, libnn-imx, libgal-imx via RDEPENDS)
-#    plus deterministic profiling and Antigravity IDE deployment utilities
+# Strip unneeded audio, multimedia, 3D demos, and wireless packagegroups from imx-image-core
+IMAGE_INSTALL:remove = "docker cl-stest"
+
+# Append the eIQ NPU runtime (pulls libopenvx-imx, libvsc-imx, libnn-imx, libgal-imx via RDEPENDS)
+# plus deterministic profiling
 IMAGE_INSTALL:append = " \
-    imx-gpu-viv \
     imx-gpu-viv-tools \
     tensorflow-lite \
     tensorflow-lite-vx-delegate \
@@ -30,7 +26,7 @@ IMAGE_INSTALL:append = " \
     tmux \
     rsync \
     openssh-sftp-server \
-    kernel-modules \
     podman \
     podman-compose \
+    os-release \
 "
