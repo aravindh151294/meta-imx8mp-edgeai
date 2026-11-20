@@ -12,12 +12,13 @@ IMAGE_VERSION_SUFFIX = "-v${DISTRO_VERSION}"
 # Strip VPU hwcodecs and splash screen features inherited from imx-image-core
 IMAGE_FEATURES:remove = "hwcodecs splash"
 
-# Strip unneeded audio, multimedia, 3D demos, and wireless packagegroups from imx-image-core
-IMAGE_INSTALL:remove = "docker cl-stest"
+# Remove Docker, factory stress-test (pulls imx-gpu-viv-demos), and competing network managers
+IMAGE_INSTALL:remove = "docker cl-stest dhcpcd ifupdown"
 
 # Append the eIQ NPU runtime (pulls libopenvx-imx, libvsc-imx, libnn-imx, libgal-imx via RDEPENDS)
 # plus deterministic profiling
 IMAGE_INSTALL:append = " \
+    edgeai-network \
     imx-gpu-viv-tools \
     tensorflow-lite \
     tensorflow-lite-vx-delegate \
