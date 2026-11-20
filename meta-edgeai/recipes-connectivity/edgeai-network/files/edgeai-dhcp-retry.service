@@ -1,0 +1,8 @@
+[Unit]
+Description=Retry DHCP on eth0 when on static fallback with no active sessions
+After=NetworkManager.service
+Requires=NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/edgeai-dhcp-retry

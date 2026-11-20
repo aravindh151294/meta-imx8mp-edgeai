@@ -1,0 +1,16 @@
+[connection]
+id=eth0-fallback
+uuid=c9b7be6a-e42d-11f1-844e-00155d3a1aa6
+type=ethernet
+interface-name=eth0
+autoconnect=true
+autoconnect-priority=10
+autoconnect-retries=-1
+mdns=0
+
+[ipv4]
+method=manual
+address1=10.1.1.10/24
+
+[ipv6]
+method=disabled
